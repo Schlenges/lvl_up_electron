@@ -1,0 +1,20 @@
+{
+  "name": "lvl_up",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "start": "electromon ."
+  },
+  "author": "Meike Hankewicz",
+  "license": "ISC",
+  "devDependencies": {
+    "electromon": "^1.0.10",
+    "electron": "^6.0.11",
+    "electron-builder": "^21.2.0"
+  },
+  "dependencies": {
+    "sqlite3": "^4.1.0"
+  }
+}
