@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+const electron = require('electron')
 const db = require('./config/db')
 const dbSetup = require('./config/dbSetup')
 const skillService = require('./skillService')
@@ -42,4 +43,13 @@ app.on('ready', async () => {
 // Data Comminication
 ipcMain.on('get skills', () => {
   skillService.getAll().then(skills => win.send('skills', skills))
+})
+
+// Menu
+ipcMain.on('show menu', () => {
+  let menu = new BrowserWindow({width: 400, height: 400, parent: win})
+  menu.loadFile('./public/menu.html')
+  menu.once('ready-to-show', () => {menu.show()})
+
+  menu.on('close', () => win.send('closed menu', false))
 })

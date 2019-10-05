@@ -1,10 +1,42 @@
 const ipc = require('electron').ipcRenderer
+const { BrowserWindow } = require('electron')
+
 
 import create from './helper.js'
 import Skills from './components/Skills.js'
 
+const MenuBtn = () => {
+  let btn
+
+  const state = {
+    isOpen: false
+  }
+
+  const setIsOpen = (val) => {
+    state.isOpen = val
+    render()
+  }
+
+  const render = () => {
+    btn = create('button')
+    btn.setId('menuBtn')
+    btn.setText('Menu')
+    btn.onClick(() => {
+      if(!state.isOpen){
+        setIsOpen(true)
+        ipc.send('show menu', 'please show menu')
+      }
+    })
+
+    return btn.element
+  }
+
+  ipc.on('closed menu', (event, isOpen) => setIsOpen(isOpen))
+
+  return render()
+}
+
 const App = () => {
-  // STATE
   const state = {
     skills: null
   }
@@ -29,6 +61,7 @@ const App = () => {
       container = create('div')
       container.setId('main')
 
+      container.add(MenuBtn())
       container.add(Skills(state.skills))
 
       return container.element

@@ -6,7 +6,8 @@ const create = (el) => {
     setText: (text) => element.innerText = text,
     setId: (id) => element.setAttribute('id', id),
     add: (childEl) => element.appendChild(childEl),
-    replace: (oldEl, newEl) => element.replaceChild(oldEl, newEl)
+    replace: (oldEl, newEl) => element.replaceChild(oldEl, newEl),
+    onClick: (clickHandler) => element.addEventListener('click', clickHandler)
   }
 
   return eObj
