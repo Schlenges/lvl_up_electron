@@ -7,6 +7,15 @@
   <title>Menu</title>
 </head>
 <body>
-  <p>This is the menu</p>
+  <div id="closeMenu">close</div>
+  <p id="addSkill">Add Skill</p>
+  <p id="addBattle">Add Battle</p>
+  <p id="edit">Edit</p>
+
+  <script>
+    const ipc = require('electron').ipcRenderer
+    document.getElementById('closeMenu').addEventListener('click', () => ipc.send('close menu', 'please!'))
+    document.getElementById('addSkill').addEventListener('click', () => ipc.send('show skill form', 'please!'))
+  </script>
 </body>
 </html>

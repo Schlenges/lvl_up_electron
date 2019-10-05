@@ -1,6 +1,4 @@
 const ipc = require('electron').ipcRenderer
-const { BrowserWindow } = require('electron')
-
 
 import create from './helper.js'
 import Skills from './components/Skills.js'
