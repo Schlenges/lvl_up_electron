@@ -40,7 +40,7 @@ app.on('ready', async () => {
   await createWindow()
 })
 
-// Data Comminication
+// Data Communication
 ipcMain.on('get skills', () => {
   skillService.getAll().then(skills => win.send('skills', skills))
 })
