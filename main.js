@@ -1,5 +1,4 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-const electron = require('electron')
 const db = require('./config/db')
 const dbSetup = require('./config/dbSetup')
 const skillService = require('./skillService')
@@ -16,6 +15,7 @@ dbSetup(db)
 
 // Create and display BrowserWindow
 let win
+let menu
 
 function createWindow(){
   win = new BrowserWindow({
@@ -45,18 +45,29 @@ ipcMain.on('get skills', () => {
   skillService.getAll().then(skills => win.send('skills', skills))
 })
 
-// Menu
+// show menu
 ipcMain.on('show menu', () => {
-  let menu = new BrowserWindow({
+  menu = new BrowserWindow({
     width: 400, 
     height: 400, 
     parent: win,
+    frame: false,
     webPreferences: {
       nodeIntegration: true
     }
   })
   menu.loadFile('./public/menu.html')
-  menu.once('ready-to-show', () => {menu.show()})
-
+  
   menu.on('close', () => win.send('closed menu', false))
 })
+
+ipcMain.on('close menu', () => menu.close())
+
+// show skill form
+ipcMain.on('show skill form', () => {
+  menu.close()
+  win.loadFile('./public/skillForm.html')
+})
+
+// cancel
+ipcMain.on('cancel', () => win.loadFile('./public/index.html'))
