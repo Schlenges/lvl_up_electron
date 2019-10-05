@@ -10,6 +10,7 @@ const npjoin = require('path').join
 const es6Path = npjoin(__dirname.replace(/\/$/, ''))
 protocol.registerSchemesAsPrivileged([{ scheme: 'es6', privileges: { standard: true, secure: true } }])
 
+// DB setup
 dbSetup(db)
 
 // Create and display BrowserWindow
@@ -38,6 +39,7 @@ app.on('ready', async () => {
   await createWindow()
 })
 
+// Data Comminication
 ipcMain.on('get skills', () => {
   skillService.getAll().then(skills => win.send('skills', skills))
 })

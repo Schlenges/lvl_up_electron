@@ -1,31 +1,7 @@
 const ipc = require('electron').ipcRenderer
 
-const Skills = (skills) => {
-  let skillContainer
-
-  const render = () => {
-    skillContainer = document.createElement('div')
-    skillContainer.setAttribute('id', 'skillContainer')
-
-    if(skills){
-      if(skills.length > 0){
-        skills.map((skill) => {
-          const paragraph = document.createElement('p')
-          paragraph.innerText = skill.name
-          skillContainer.appendChild(paragraph)
-        })
-      } else {
-        const alert = document.createElement('p')
-        alert.innerText = "No skills to work on"
-        skillContainer.appendChild(alert)
-      }
-    }
-
-    return skillContainer
-  }
-
-  return render()
-}
+import create from './helper.js'
+import Skills from './components/Skills.js'
 
 const App = () => {
   // STATE
@@ -50,15 +26,15 @@ const App = () => {
 
   const render = () => {
     if(!document.getElementById('main')){
-      container = document.createElement('div')
-      container.setAttribute('id', 'main')
+      container = create('div')
+      container.setId('main')
 
-      container.appendChild(Skills(state.skills))
+      container.add(Skills(state.skills))
 
-      return container
+      return container.element
     }
 
-    container.replaceChild(Skills(state.skills), document.getElementById('skillContainer'))
+    container.replace(Skills(state.skills), document.getElementById('skillContainer'))
   }
 
   return render()
