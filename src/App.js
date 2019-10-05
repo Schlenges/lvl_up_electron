@@ -1,34 +1,42 @@
 const ipc = require('electron').ipcRenderer
+const { BrowserWindow } = require('electron')
 
-const Skills = (skills) => {
-  let skillContainer
+
+import create from './helper.js'
+import Skills from './components/Skills.js'
+
+const MenuBtn = () => {
+  let btn
+
+  const state = {
+    isOpen: false
+  }
+
+  const setIsOpen = (val) => {
+    state.isOpen = val
+    render()
+  }
 
   const render = () => {
-    skillContainer = document.createElement('div')
-    skillContainer.setAttribute('id', 'skillContainer')
-
-    if(skills){
-      if(skills.length > 0){
-        skills.map((skill) => {
-          const paragraph = document.createElement('p')
-          paragraph.innerText = skill.name
-          skillContainer.appendChild(paragraph)
-        })
-      } else {
-        const alert = document.createElement('p')
-        alert.innerText = "No skills to work on"
-        skillContainer.appendChild(alert)
+    btn = create('button')
+    btn.setId('menuBtn')
+    btn.setText('Menu')
+    btn.onClick(() => {
+      if(!state.isOpen){
+        setIsOpen(true)
+        ipc.send('show menu', 'please show menu')
       }
-    }
+    })
 
-    return skillContainer
+    return btn.element
   }
+
+  ipc.on('closed menu', (event, isOpen) => setIsOpen(isOpen))
 
   return render()
 }
 
 const App = () => {
-  // STATE
   const state = {
     skills: null
   }
@@ -50,15 +58,16 @@ const App = () => {
 
   const render = () => {
     if(!document.getElementById('main')){
-      container = document.createElement('div')
-      container.setAttribute('id', 'main')
+      container = create('div')
+      container.setId('main')
 
-      container.appendChild(Skills(state.skills))
+      container.add(MenuBtn())
+      container.add(Skills(state.skills))
 
-      return container
+      return container.element
     }
 
-    container.replaceChild(Skills(state.skills), document.getElementById('skillContainer'))
+    container.replace(Skills(state.skills), document.getElementById('skillContainer'))
   }
 
   return render()
