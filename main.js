@@ -12,8 +12,6 @@ protocol.registerSchemesAsPrivileged([{ scheme: 'es6', privileges: { standard: t
 
 dbSetup(db)
 
-
-
 // Create and display BrowserWindow
 let win
 

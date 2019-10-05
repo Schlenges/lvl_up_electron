@@ -5,20 +5,4 @@ db = new sqlite3.Database(':memory:', (err) => {
   console.log('db connected')
 })
 
-/* exports.dbSetup = (db) => {
-  let insertData = [
-    "Programming",
-    "Guitar",
-    "Cooking"
-  ]
-  
-  db.serialize(() => {
-    db.run("CREATE TABLE skills (id INT, skill TEXT)")
-  
-    let sql = db.prepare("INSERT INTO skills VALUES (?, ?)")
-    insertData.map((skill, i) => sql.run(i, skill))
-    sql.finalize()
-  })
-} */
-
 module.exports = db
