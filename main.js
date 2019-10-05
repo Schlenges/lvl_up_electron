@@ -1,5 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-const sqlite3 = require('sqlite3').verbose()
+const db = require('./config/db')
+const dbSetup = require('./config/dbSetup')
+const skillService = require('./skillService')
 
 // Fix for ES6 module support
 const { protocol } = require('electron')
@@ -8,15 +10,9 @@ const npjoin = require('path').join
 const es6Path = npjoin(__dirname.replace(/\/$/, ''))
 protocol.registerSchemesAsPrivileged([{ scheme: 'es6', privileges: { standard: true, secure: true } }])
 
-// Database
-let db = new sqlite3.Database(':memory:', (err) => {
-  if (err) return console.error(err.message)
-  console.log('Connected to the in-memory SQlite database.')
-})
+dbSetup(db)
 
-db.close()
-
-// Create BrowserWindow
+// Create and display BrowserWindow
 let win
 
 function createWindow(){
@@ -29,6 +25,7 @@ function createWindow(){
   })
 
   win.loadFile('./public/index.html')
+  win.webContents.openDevTools()
 }
 
 app.on('ready', async () => {
@@ -39,4 +36,8 @@ app.on('ready', async () => {
     )
   })
   await createWindow()
+})
+
+ipcMain.on('get skills', () => {
+  skillService.getAll().then(skills => win.send('skills', skills))
 })
