@@ -47,7 +47,14 @@ ipcMain.on('get skills', () => {
 
 // Menu
 ipcMain.on('show menu', () => {
-  let menu = new BrowserWindow({width: 400, height: 400, parent: win})
+  let menu = new BrowserWindow({
+    width: 400, 
+    height: 400, 
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
   menu.loadFile('./public/menu.html')
   menu.once('ready-to-show', () => {menu.show()})
 
