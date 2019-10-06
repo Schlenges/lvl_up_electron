@@ -28,6 +28,9 @@ function createWindow(){
 
   win.loadFile('./public/index.html')
   win.webContents.openDevTools()
+  win.once('ready-to-show', () => {
+    win.show()
+  })
 }
 
 app.on('ready', async () => {
@@ -57,8 +60,11 @@ ipcMain.on('show menu', () => {
     }
   })
   menu.loadFile('./public/menu.html')
-  
   menu.on('close', () => win.send('closed menu', false))
+
+  menu.once('ready-to-show', () => {
+    menu.show()
+  })
 })
 
 ipcMain.on('close menu', () => menu.close())
