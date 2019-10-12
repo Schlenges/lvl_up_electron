@@ -1,4 +1,4 @@
-import create from '../helper.js'
+import {create} from '../helper.js'
 
 const Skill = (skill) => {
   const render = () => {

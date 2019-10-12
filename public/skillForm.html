@@ -5,20 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title></title>
-
-  <style>
-    body{
-      background: grey
-    }
-  </style>
 </head>
 <body>
   <p>Skill Form</p>
-  <button id="cancel">cancel</button>
+  <form>
+    <label for="skillInput">Skill</label>
+    <input type="text" name="skillName" id="nameInput">
+    <br>
+    <button type="submit" id="add">Add</button>
+    <button id="cancel">Cancel</button>
+  </form>
 
-  <script>
-    const ipc = require('electron').ipcRenderer
-    document.getElementById('cancel').addEventListener('click', () => ipc.send('cancel'))
-  </script>
+  <!-- <div id="form-root"></div> -->
+
+  <script type="module" src="es6://./src/components/SkillForm.js"></script>
 </body>
 </html>

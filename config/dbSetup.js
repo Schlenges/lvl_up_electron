@@ -6,10 +6,10 @@ const dbSetup = (db) => {
   ]
   
   db.serialize(() => {
-    db.run("CREATE TABLE skills (id INT, name TEXT)")
+    db.run("CREATE TABLE skills (id INTEGER PRIMARY KEY, name TEXT)")
   
-    let sql = db.prepare("INSERT INTO skills VALUES (?, ?)")
-    insertData.map((skill, i) => sql.run(i, skill))
+    let sql = db.prepare("INSERT INTO skills (name) VALUES (?)")
+    insertData.map((skill) => sql.run(skill))
     sql.finalize()
   })
   

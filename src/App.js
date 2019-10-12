@@ -1,6 +1,5 @@
 const ipc = require('electron').ipcRenderer
-
-import create from './helper.js'
+import {create} from './helper.js'
 import Skills from './components/Skills.js'
 
 const MenuBtn = () => {
