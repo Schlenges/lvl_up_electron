@@ -26,7 +26,7 @@ function createWindow(){
     }
   })
 
-  win.loadFile('./public/skillform.html') // ./public/index.html
+  win.loadFile('./public/index.html')
   win.webContents.openDevTools()
   win.once('ready-to-show', () => {
     win.show()
