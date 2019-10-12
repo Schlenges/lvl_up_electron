@@ -26,7 +26,7 @@ function createWindow(){
     }
   })
 
-  win.loadFile('./public/index.html')
+  win.loadFile('./public/skillform.html') // ./public/index.html
   win.webContents.openDevTools()
   win.once('ready-to-show', () => {
     win.show()
@@ -45,7 +45,9 @@ app.on('ready', async () => {
 
 // Data Communication
 ipcMain.on('get skills', () => {
-  skillService.getAll().then(skills => win.send('skills', skills))
+  skillService.getAll()
+    .then(skills => win.send('skills', skills))
+    .catch(err => console.log(err))
 })
 
 // show menu
@@ -77,3 +79,10 @@ ipcMain.on('show skill form', () => {
 
 // cancel
 ipcMain.on('cancel', () => win.loadFile('./public/index.html'))
+
+// add Skill
+ipcMain.on('add skill', (e, skill) => {
+  skillService.add(skill)
+    .then(() => win.loadFile('./public/index.html'))
+    .catch(err => console.log(err))
+})
