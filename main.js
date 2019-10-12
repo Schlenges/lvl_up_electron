@@ -16,6 +16,7 @@ dbSetup(db)
 // Create and display BrowserWindow
 let win
 let menu
+let disableClose = false
 
 function createWindow(){
   win = new BrowserWindow({
@@ -28,6 +29,12 @@ function createWindow(){
 
   win.loadFile('./public/index.html')
   win.webContents.openDevTools()
+
+  win.on('close', (e) => {
+    if(disableClose) return e.preventDefault()
+    app.quit()
+  })
+
   win.once('ready-to-show', () => {
     win.show()
   })
@@ -62,7 +69,13 @@ ipcMain.on('show menu', () => {
     }
   })
   menu.loadFile('./public/menu.html')
-  menu.on('close', () => win.send('closed menu', false))
+
+  disableClose = true
+
+  menu.on('close', () => {
+    disableClose = false
+    win.send('closed menu', false)
+  })
 
   menu.once('ready-to-show', () => {
     menu.show()

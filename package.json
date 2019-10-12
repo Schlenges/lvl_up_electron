@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "start": "electromon ."
+    "start": "electromon .",
+    "vanilla": "electron ."
   },
   "author": "Meike Hankewicz",
   "license": "ISC",
