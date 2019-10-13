@@ -18,7 +18,9 @@ const SkillForm = () => {
 
   getElement('form').onSubmit((e) => {
     e.preventDefault()
-    ipc.send('add skill', getElement('#nameInput').value)
+    const name = getElement('#nameInput').value
+    const maxLvl = getElement('#maxLvl').value
+    ipc.send('add skill', {name, maxLvl})
   })
 
   /* const render = () => {

@@ -7,8 +7,8 @@ exports.getAll = () => new Promise((resolve, reject) => (
   })
 ))
 
-exports.add = (skill) => new Promise((resolve, reject) => (
-  db.run("INSERT INTO skills(name) VALUES(?)", [skill], function(err) {
+exports.add = ({name, maxLvl}) => new Promise((resolve, reject) => (
+  db.run("INSERT INTO skills(name, max_lvl) VALUES(?, ?)", [name, maxLvl], function(err) {
     if(err) reject(err)
     else resolve(this.lastID)
   })
