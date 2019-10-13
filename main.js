@@ -28,7 +28,7 @@ function createWindow(){
   })
 
   win.loadFile('./public/index.html')
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   win.on('close', (e) => {
     if(disableClose) return e.preventDefault()
