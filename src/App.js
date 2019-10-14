@@ -64,7 +64,7 @@ const App = () => {
       return container.element
     }
 
-    container.replace(Skills(state.skills), document.getElementById('skillContainer'))
+    container.replace(Skills(state.skills), document.getElementById('skillsContainer'))
   }
 
   return render()

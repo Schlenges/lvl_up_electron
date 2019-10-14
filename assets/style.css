@@ -23,6 +23,7 @@ button{
 
 #menuBtn{
   align-self: flex-end;
+  margin-bottom: 6%;
 }
 
 #menu{
@@ -44,4 +45,38 @@ button{
 
 #skillForm button{
   margin-top: 20px;
+}
+
+/* ------------------------------- */
+
+.skill{
+  display: flex;
+  align-items: center;
+}
+
+.skill-progress{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.progressbar{
+  height: 2.8rem;
+  width: 40%;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  background: #e0dcd9;
+}
+
+.progress{
+  height: 2.8rem;
+  border-radius: 5px 0 0 5px;
+  display: block;
+  background: green;
+  width: 0;
+}
+
+.label{
+  margin-left: 20px;
+  width: 30%;
 }

@@ -1,34 +1,40 @@
 import {create} from '../helper.js'
 
 const Skill = (skill) => {
-  const render = () => {
-    const paragraph = create('p')
-    paragraph.setText(skill.name)
+  let borderRadius = skill.curr_xp == 100 ? "border-radius:5px" : null
 
-    return paragraph.element
-  }
+  const render = () => (`
+      <div class="skill" id="${skill.id}">
+        <div class="progressbar">
+          <span class="progress" style="width: ${skill.curr_xp}%; ${borderRadius}"></span>
+        </div>
+        <span class="label">${skill.name}</span>
+        <span class="lvl-progress">LVL ${skill.curr_lvl}/${skill.max_lvl}</span>
+      </div>
+    `)
 
   return render()
 }
 
 const Skills = (skills) => {
-  let skillContainer
+  let skillsContainer
 
   const render = () => {
-    skillContainer = create('div')
-    skillContainer.setId('skillContainer')
+    skillsContainer = create('div')
+    skillsContainer.setId('skillsContainer')
 
     if(skills){
       if(skills.length > 0){
-        skills.map((skill) => skillContainer.add(Skill(skill)))
+        // skills.map((skill) => skillsContainer.add(Skill(skill)))
+        skills.map(skill => skillsContainer.addHtml(Skill(skill)))
       } else {
         const alert = create('p')
         alert.setText("No skills to work on")
-        skillContainer.add(alert.element)
+        skillsContainer.add(alert.element)
       }
     }
 
-    return skillContainer.element
+    return skillsContainer.element
   }
 
   return render()

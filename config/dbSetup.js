@@ -4,13 +4,13 @@ const dbSetup = (db) => {
       name: "Programming",
       curr_lvl: 2,
       max_lvl: 10,
-      curr_xp: 40
+      curr_xp: 100
     },
     {
       name: "Guitar",
       curr_lvl: 0,
       max_lvl: 10,
-      curr_xp: 0
+      curr_xp: 40
     },
     {
       name: "Cooking",
