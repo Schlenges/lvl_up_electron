@@ -17,8 +17,8 @@
 
   <script>
     const ipc = require('electron').ipcRenderer
-    document.getElementById('closeMenu').addEventListener('click', () => ipc.send('close menu', 'please!'))
-    document.getElementById('addSkill').addEventListener('click', () => ipc.send('show skill form', 'please!'))
+    document.getElementById('closeMenu').addEventListener('click', () => ipc.send('close menu'))
+    document.getElementById('addSkill').addEventListener('click', () => ipc.send('show skill form'))
   </script>
 </body>
 </html>
