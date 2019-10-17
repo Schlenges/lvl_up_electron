@@ -1,36 +1,22 @@
 const ipc = require('electron').ipcRenderer
-import {create} from './helper.js'
+import {getElement} from './helper.js'
 import Skills from './components/Skills.js'
 
 const MenuBtn = () => {
-  let btn
-
   const state = {
-    isOpen: false
+    isClosed: true
   }
 
-  const setIsOpen = (val) => {
-    state.isOpen = val
-    render()
-  }
+  const setIsClosed = (val) => state.isClosed = val
 
-  const render = () => {
-    btn = create('button')
-    btn.setId('menuBtn')
-    btn.setText('Menu')
-    btn.onClick(() => {
-      if(!state.isOpen){
-        setIsOpen(true)
-        ipc.send('show menu', 'please show menu')
-      }
-    })
+  getElement('#menuBtn').onClick(() => {
+    if(state.isClosed){
+      setIsClosed(true)
+      ipc.send('show menu')
+    }
+  })
 
-    return btn.element
-  }
-
-  ipc.on('closed menu', (event, isOpen) => setIsOpen(isOpen))
-
-  return render()
+  ipc.on('closed menu', (e, isClosed) => setIsClosed(isClosed))
 }
 
 const App = () => {
@@ -43,28 +29,18 @@ const App = () => {
     render()
   }
 
-  // GET DATA
-  ipc.send('get skills', 'please get skills')
+  ipc.send('get skills')
 
-  ipc.on('skills', (event, skills) => {
-    setSkills(skills)
-  })
+  ipc.on('skills', (e, skills) => setSkills(skills))
 
-  // RENDER
-  let container
+  MenuBtn()
 
   const render = () => {
-    if(!document.getElementById('main')){
-      container = create('div')
-      container.setId('main')
-
-      container.add(MenuBtn())
-      container.add(Skills(state.skills))
-
-      return container.element
+    if(!getElement('#skillsContainer')){
+      return getElement('#main').add(Skills(state.skills))
     }
 
-    container.replace(Skills(state.skills), document.getElementById('skillContainer'))
+    getElement('#main').replace(Skills(state.skills), getElement('#skillsContainer').element)
   }
 
   return render()
