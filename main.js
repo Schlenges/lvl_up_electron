@@ -28,7 +28,7 @@ function createWindow(){
   })
 
   win.loadFile('./public/index.html')
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   win.on('close', (e) => {
     if(disableClose) return e.preventDefault()
@@ -74,7 +74,7 @@ ipcMain.on('show menu', () => {
 
   menu.on('close', () => {
     disableClose = false
-    win.send('closed menu', false)
+    win.send('closed menu', true)
   })
 
   menu.once('ready-to-show', () => {

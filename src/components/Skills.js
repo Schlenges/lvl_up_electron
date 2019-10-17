@@ -25,7 +25,6 @@ const Skills = (skills) => {
 
     if(skills){
       if(skills.length > 0){
-        // skills.map((skill) => skillsContainer.add(Skill(skill)))
         skills.map(skill => skillsContainer.addHtml(Skill(skill)))
       } else {
         const alert = create('p')

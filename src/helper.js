@@ -5,7 +5,7 @@ const create = (el) => {
 
 const getElement = (el) => {
   const element = document.querySelector(el)
-  return _setElementObject(element)
+  return element ? _setElementObject(element) : null
 }
 
 const _setElementObject = (element) => ({
