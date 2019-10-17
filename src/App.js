@@ -1,6 +1,7 @@
 const ipc = require('electron').ipcRenderer
 import {getElement} from './helper.js'
 import Skills from './components/Skills.js'
+import Battles from './components/Battles.js'
 
 const MenuBtn = () => {
   const state = {
@@ -21,7 +22,9 @@ const MenuBtn = () => {
 
 const App = () => {
   const state = {
-    skills: null
+    skills: null,
+    selectedSkill: null,
+    battles: null
   }
 
   const setSkills = (newSkills) => {
@@ -29,18 +32,33 @@ const App = () => {
     render()
   }
 
-  ipc.send('get skills')
+  const setSelectedSkill = (skill) => {
+    state.selectedSkill = skill
+    ipc.send('get battles', skill.id)
+  }
 
+  const setBattles = (battles) => {
+    state.battles = battles
+    render()
+  }
+
+  ipc.send('get skills')
   ipc.on('skills', (e, skills) => setSkills(skills))
+
+  ipc.on('battles', (e, battles) => setBattles(battles))
 
   MenuBtn()
 
   const render = () => {
-    if(!getElement('#skillsContainer')){
-      return getElement('#main').add(Skills(state.skills))
+    if(state.battles){
+      return Battles(state.selectedSkill, state.battles)
     }
 
-    getElement('#main').replace(Skills(state.skills), getElement('#skillsContainer').element)
+    if(!getElement('#skillsContainer')){
+      return getElement('#main').add(Skills(state.skills, setSelectedSkill))
+    }
+
+    getElement('#main').replace(Skills(state.skills, setSelectedSkill), getElement('#skillsContainer'))
   }
 
   return render()

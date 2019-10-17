@@ -1,22 +1,7 @@
 import {create} from '../helper.js'
+import Skill from './Skill.js'
 
-const Skill = (skill) => {
-  let borderRadius = skill.curr_xp == 100 ? "border-radius:5px" : null
-
-  const render = () => (`
-      <div class="skill" id="${skill.id}">
-        <div class="progressbar">
-          <span class="progress" style="width: ${skill.curr_xp}%; ${borderRadius}"></span>
-        </div>
-        <span class="label">${skill.name}</span>
-        <span class="lvl-progress">LVL ${skill.curr_lvl}/${skill.max_lvl}</span>
-      </div>
-    `)
-
-  return render()
-}
-
-const Skills = (skills) => {
+const Skills = (skills, setSelectedSkill) => {
   let skillsContainer
 
   const render = () => {
@@ -25,15 +10,15 @@ const Skills = (skills) => {
 
     if(skills){
       if(skills.length > 0){
-        skills.map(skill => skillsContainer.addHtml(Skill(skill)))
+        skills.map(skill => skillsContainer.add(Skill(skill, setSelectedSkill)))
       } else {
         const alert = create('p')
         alert.setText("No skills to work on")
-        skillsContainer.add(alert.element)
+        skillsContainer.add(alert)
       }
     }
 
-    return skillsContainer.element
+    return skillsContainer
   }
 
   return render()

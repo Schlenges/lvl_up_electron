@@ -1,5 +1,5 @@
 const dbSetup = (db) => {
-  let insertData = [
+  let skills = [
     {
       name: "JavaScript",
       curr_lvl: 5,
@@ -19,6 +19,14 @@ const dbSetup = (db) => {
       curr_xp: 40
     }
   ]
+
+  const battles = [
+    {
+      description: "freeCodeCamp",
+      xp: 10,
+      skill_id: 1
+    }
+  ]
   
   db.serialize(() => {
     db.run(`CREATE TABLE skills (
@@ -29,9 +37,6 @@ const dbSetup = (db) => {
       curr_xp INTEGER NOT NULL DEFAULT 0
       )`
     )
-  
-    let sql = db.prepare("INSERT INTO skills (name, curr_lvl, max_lvl, curr_xp) VALUES (?, ?, ?, ?)")
-    insertData.map((skill) => sql.run(skill.name, skill.curr_lvl, skill.max_lvl, skill.curr_xp))
 
     db.run(`CREATE TABLE battles (
       id INTEGER PRIMARY KEY NOT NULL, 
@@ -41,6 +46,13 @@ const dbSetup = (db) => {
       FOREIGN KEY (skill_id) REFERENCES skills (id) ON DELETE CASCADE
       )`
     )
+  
+    let sql = db.prepare("INSERT INTO skills (name, curr_lvl, max_lvl, curr_xp) VALUES (?, ?, ?, ?)")
+    skills.map((skill) => sql.run(skill.name, skill.curr_lvl, skill.max_lvl, skill.curr_xp))
+    
+
+    let sql2 = db.prepare("INSERT INTO battles (description, xp, skill_id) VALUES (?, ?, ?)")
+    battles.map(battle => sql2.run(battle.description, battle.xp, battle.skill_id))
     
     sql.finalize()
   })

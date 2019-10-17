@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const db = require('./config/db')
 const dbSetup = require('./config/dbSetup')
 const skillService = require('./skillService')
+const battleService = require('./battleService')
 
 // Fix for ES6 module support
 const { protocol } = require('electron')
@@ -54,6 +55,12 @@ app.on('ready', async () => {
 ipcMain.on('get skills', () => {
   skillService.getAll()
     .then(skills => win.send('skills', skills))
+    .catch(err => console.log(err))
+})
+
+ipcMain.on('get battles', (e, skillId) => {
+  battleService.getBySkill(skillId)
+    .then(battles => win.send('battles', battles))
     .catch(err => console.log(err))
 })
 

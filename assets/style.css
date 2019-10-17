@@ -80,3 +80,23 @@ button{
   margin-left: 20px;
   width: 30%;
 }
+
+/* --------------------------------------------------------------- */
+.battles{
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+}
+
+.battle{
+  display: flex;
+  align-items: flex-end;
+}
+
+.battles button{
+  margin-right: 15px;
+}
+
+.battle-description{
+  width: 30%;
+}
