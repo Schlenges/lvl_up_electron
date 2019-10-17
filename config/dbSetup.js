@@ -1,22 +1,22 @@
 const dbSetup = (db) => {
   let insertData = [
     {
-      name: "Programming",
-      curr_lvl: 2,
-      max_lvl: 10,
+      name: "JavaScript",
+      curr_lvl: 5,
+      max_lvl: 15,
       curr_xp: 100
     },
     {
       name: "Guitar",
+      curr_lvl: 1,
+      max_lvl: 10,
+      curr_xp: 10
+    },
+    {
+      name: "Pottery",
       curr_lvl: 0,
       max_lvl: 10,
       curr_xp: 40
-    },
-    {
-      name: "Cooking",
-      curr_lvl: 5,
-      max_lvl: 15,
-      curr_xp: 10
     }
   ]
   
