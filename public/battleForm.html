@@ -25,10 +25,24 @@
   <script>
     const ipc = require('electron').ipcRenderer
 
+    let skill_id
+    ipc.send('get skill id')
+    ipc.on('skill id', (e, id) => skill_id = id)
+
     document.getElementById('cancel').addEventListener('click', (e) => {
       e.preventDefault()
       ipc.send('cancel battle add')
     })
+
+    document.querySelector('form').addEventListener('submit', (e) => {
+      e.preventDefault()
+      const description = document.getElementById('description-input').value
+      const xp = document.getElementById('xp-input').value
+
+      ipc.send('add battle', {description, xp, skill_id})
+    })
+
+    
   </script>
 </body>
 </html>

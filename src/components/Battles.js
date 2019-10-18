@@ -28,18 +28,9 @@ const Battle = (battle) => {
   }
 
   return render()
-
-  /* `
-  <div class="battles">
-    <div class="battle">
-      <span class="battle-name">${battle.description}</span>
-      <span class="xp">${battle.xp} XP</span>
-    </div>
-  </div>
-  ` */
 }
 
-const Battles = (skill, battles) => {
+const Battles = (skill, battles, setBattles) => {
   const mainDiv = getElement('#main')
   const skills = getElement('#skillsContainer')
   let isShowing = false
@@ -50,11 +41,11 @@ const Battles = (skill, battles) => {
     }
 
     if(getElement(`#skill${skill.id}`)){
-      return mainDiv.replace(Skill(skill), getElement(`#skill${skill.id}`))
+      mainDiv.replace(Skill(skill), getElement(`#skill${skill.id}`))
+    } else {
+      mainDiv.add(Skill(skill, null, true))
     }
 
-    mainDiv.add(Skill(skill, null, true))
-    
     const battlesContainer = create('div')
     battlesContainer.addClass('battles')
 
@@ -66,16 +57,21 @@ const Battles = (skill, battles) => {
     addBtn.onClick(() => {
       if(!isShowing){
         isShowing = true
-        ipc.send('show battle form')
+        ipc.send('show battle form', skill.id)
       }
     })
 
     battlesContainer.add(addBtn)
 
-    mainDiv.add(battlesContainer)
+    if(!getElement('.battles')){
+      mainDiv.add(battlesContainer)
+    } else {
+      mainDiv.replace(battlesContainer, getElement('.battles'))
+    }
   }
 
   ipc.on('closed battle form', () => isShowing = !isShowing)
+  ipc.on('battle added', (e, battle) => setBattles([...battles, battle]))
 
   return render()
 }

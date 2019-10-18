@@ -14,4 +14,12 @@ exports.getBySkill = (skillId) => new Promise((resolve, reject) => (
   })
 ))
 
+exports.add = ({description, xp, skill_id}) => new Promise((resolve, reject) => (
+  db.run("INSERT INTO battles (description, xp, skill_id) VALUES (?, ?, ?)", 
+    [description, xp, skill_id], function(err) {
+      if(err) reject(err)
+      else resolve(this.lastID)
+  })
+))
+
 module.exports = exports

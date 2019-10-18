@@ -110,7 +110,7 @@ ipcMain.on('add skill', (e, skill) => {
 let formWin
 
 // show battle form
-ipcMain.on('show battle form', () => {
+ipcMain.on('show battle form', (e, id) => {
   formWin = new BrowserWindow({
     width: 600, 
     height: 400, 
@@ -132,10 +132,20 @@ ipcMain.on('show battle form', () => {
   formWin.once('ready-to-show', () => {
     formWin.show()
   })
+
+  ipcMain.on('get skill id', () => formWin.send('skill id', id))
 })
 
 ipcMain.on('cancel battle add', () => {
   formWin.close()
+})
+
+ipcMain.on('add battle', (e, battle) => {
+  battleService.add(battle)
+    .then((id) => {
+      win.send('battle added', {...battle, id})
+      formWin.close()
+    })
 })
   
 // update xp

@@ -65,7 +65,7 @@ const App = () => {
     let mainContainer = getElement('#main')
 
     if(state.battles){
-      return Battles(state.selectedSkill, state.battles)
+      return Battles(state.selectedSkill, state.battles, setBattles)
     }
 
     if(!skillsContainer){
