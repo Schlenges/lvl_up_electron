@@ -25,13 +25,9 @@
   <script>
     const ipc = require('electron').ipcRenderer
 
-    let battles
-
-    ipc.on('battles data', (e, battlesData) => battles = battlesData)
-
     document.getElementById('cancel').addEventListener('click', (e) => {
       e.preventDefault()
-      ipc.send('cancel battle add', battles)
+      ipc.send('cancel battle add')
     })
   </script>
 </body>

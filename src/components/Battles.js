@@ -53,7 +53,7 @@ const Battles = (skill, battles) => {
       return mainDiv.replace(Skill(skill), getElement(`#skill${skill.id}`))
     }
 
-    mainDiv.add(Skill(skill))
+    mainDiv.add(Skill(skill, null, true))
     
     const battlesContainer = create('div')
     battlesContainer.addClass('battles')

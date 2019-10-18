@@ -1,6 +1,6 @@
 import {create} from '../helper.js'
 
-const Skill = (skill, setSelectedSkill) => {
+const Skill = (skill, setSelectedSkill, fromBattles) => {
   let borderRadius = skill.curr_xp == 100 ? "5px" : null
 
   const render = () => {   
@@ -22,7 +22,9 @@ const Skill = (skill, setSelectedSkill) => {
     label.addClass('label')
     label.setText(skill.name)
     
-    label.onClick(() => setSelectedSkill(skill))
+    if(!fromBattles){
+      label.onClick(() => setSelectedSkill(skill))
+    }
 
     const lvlProgress = create('span')
     lvlProgress.addClass('lvl-progress')
