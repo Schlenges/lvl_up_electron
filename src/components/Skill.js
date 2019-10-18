@@ -6,7 +6,7 @@ const Skill = (skill, setSelectedSkill) => {
   const render = () => {   
     const skillContainer = create('div')
     skillContainer.addClass('skill')
-    skillContainer.setId(skill.id)
+    skillContainer.setId('skill' + skill.id)
 
     const progressbar = create('div')
     progressbar.addClass('progressbar')

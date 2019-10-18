@@ -47,18 +47,32 @@ const App = () => {
 
   ipc.on('battles', (e, battles) => setBattles(battles))
 
+  ipc.on('updated xp', (e, vals) => {
+    setSkills(state.skills.map(skill => {
+      if(skill.id === vals.skill_id){
+        skill.curr_xp = vals.newXp
+        skill.curr_lvl = vals.newLvl
+      }
+      return skill
+    }))
+  })
+
+
   MenuBtn()
 
   const render = () => {
+    let skillsContainer = getElement('#skillsContainer')
+    let mainContainer = getElement('#main')
+
     if(state.battles){
       return Battles(state.selectedSkill, state.battles)
     }
 
-    if(!getElement('#skillsContainer')){
-      return getElement('#main').add(Skills(state.skills, setSelectedSkill))
+    if(!skillsContainer){
+      return mainContainer.add(Skills(state.skills, setSelectedSkill))
     }
 
-    getElement('#main').replace(Skills(state.skills, setSelectedSkill), getElement('#skillsContainer'))
+    mainContainer.replace(Skills(state.skills, setSelectedSkill), skillsContainer)
   }
 
   return render()

@@ -91,6 +91,7 @@ button{
 .battle{
   display: flex;
   align-items: flex-end;
+  margin-bottom: 25px;
 }
 
 .battles button{
@@ -99,4 +100,8 @@ button{
 
 .battle-description{
   width: 30%;
+}
+
+#add-battle{
+  align-self: flex-start;
 }

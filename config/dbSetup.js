@@ -2,9 +2,9 @@ const dbSetup = (db) => {
   let skills = [
     {
       name: "JavaScript",
-      curr_lvl: 5,
+      curr_lvl: 14,
       max_lvl: 15,
-      curr_xp: 100
+      curr_xp: 90
     },
     {
       name: "Guitar",

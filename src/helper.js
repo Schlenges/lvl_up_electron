@@ -18,7 +18,7 @@ const _setElementObject = (element) => ({
   add: (childEl) => element.appendChild(childEl.element),
   remove: (childEl) => element.removeChild(childEl.element),
   // addHtml: (html) => element.innerHTML += html,
-  replace: (oldEl, newEl) => element.replaceChild(oldEl.element, newEl.element),
+  replace: (newEl, oldEl) => element.replaceChild(newEl.element, oldEl.element),
   onClick: (clickHandler) => element.addEventListener('click', clickHandler),
   onSubmit: (submitHandler) => element.addEventListener('submit', submitHandler)
 })
