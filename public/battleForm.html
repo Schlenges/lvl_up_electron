@@ -14,7 +14,7 @@
       <label for="description-input">Battle</label>
       <input type="text" name="description" id="description-input">
       <br>
-      <label for="xp-input">Max Level</label>
+      <label for="xp-input">XP</label>
       <input type="number" name="xp" id="xp-input">
       <br>
       <button type="submit" id="add">Add</button>
@@ -37,8 +37,7 @@
     document.querySelector('form').addEventListener('submit', (e) => {
       e.preventDefault()
       const description = document.getElementById('description-input').value
-      const xp = document.getElementById('xp-input').value
-
+      const xp = parseInt(document.getElementById('xp-input').value)
       ipc.send('add battle', {description, xp, skill_id})
     })
 
