@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../assets/style.css">
+  <title></title>
+</head>
+<body>
+  <div id="battle-form">
+    <p>Battle Form</p>
+    <form>
+      <label for="description-input">Battle</label>
+      <input type="text" name="description" id="description-input">
+      <br>
+      <label for="xp-input">XP</label>
+      <input type="number" name="xp" id="xp-input">
+      <br>
+      <button type="submit" id="add">Add</button>
+      <button id="cancel">Cancel</button>
+    </form>
+  </div>
+
+  <script>
+    const ipc = require('electron').ipcRenderer
+
+    let skill_id
+    ipc.send('get skill id')
+    ipc.on('skill id', (e, id) => skill_id = id)
+
+    document.getElementById('cancel').addEventListener('click', (e) => {
+      e.preventDefault()
+      ipc.send('cancel battle add')
+    })
+
+    document.querySelector('form').addEventListener('submit', (e) => {
+      e.preventDefault()
+      const description = document.getElementById('description-input').value
+      const xp = parseInt(document.getElementById('xp-input').value)
+      ipc.send('add battle', {description, xp, skill_id})
+    })
+
+    
+  </script>
+</body>
+</html>

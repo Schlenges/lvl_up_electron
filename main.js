@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const db = require('./config/db')
 const dbSetup = require('./config/dbSetup')
 const skillService = require('./skillService')
+const battleService = require('./battleService')
 
 // Fix for ES6 module support
 const { protocol } = require('electron')
@@ -57,6 +58,12 @@ ipcMain.on('get skills', () => {
     .catch(err => console.log(err))
 })
 
+ipcMain.on('get battles', (e, skillId) => {
+  battleService.getBySkill(skillId)
+    .then(battles => win.send('battles', battles))
+    .catch(err => console.log(err))
+})
+
 // show menu
 ipcMain.on('show menu', () => {
   menu = new BrowserWindow({
@@ -91,11 +98,58 @@ ipcMain.on('show skill form', () => {
 })
 
 // cancel
-ipcMain.on('cancel', () => win.loadFile('./public/index.html'))
+ipcMain.on('cancel skill add', () => win.loadFile('./public/index.html'))
 
 // add Skill
 ipcMain.on('add skill', (e, skill) => {
   skillService.add(skill)
     .then(() => win.loadFile('./public/index.html'))
     .catch(err => console.log(err))
+})
+
+let formWin
+
+// show battle form
+ipcMain.on('show battle form', (e, id) => {
+  formWin = new BrowserWindow({
+    width: 600, 
+    height: 400, 
+    parent: win,
+    frame: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+  formWin.loadFile('./public/battleForm.html')
+
+  disableClose = true
+
+  formWin.on('close', () => {
+    disableClose = false
+    win.send('closed battle form')
+  })
+
+  formWin.once('ready-to-show', () => {
+    formWin.show()
+  })
+
+  ipcMain.on('get skill id', () => formWin.send('skill id', id))
+})
+
+ipcMain.on('cancel battle add', () => {
+  formWin.close()
+})
+
+ipcMain.on('add battle', (e, battle) => {
+  battleService.add(battle)
+    .then((id) => {
+      win.send('battle added', {...battle, id})
+      formWin.close()
+    })
+})
+  
+// update xp
+ipcMain.on('update xp', (e, {xp, skill_id}) => {
+  skillService.updateXP(xp, skill_id)
+    .then(({newXp, newLvl}) => win.send('updated xp', {newXp, newLvl, skill_id}))
 })
