@@ -10,14 +10,15 @@
 <body>
   <div id="menu">
     <div id="closeMenu">close</div>
+    <p id="showSkills">Show Skills</p>
     <p id="addSkill">Add Skill</p>
-    <p id="addBattle">Add Battle</p>
-    <p id="edit">Edit</p>
   </div>
 
   <script>
     const ipc = require('electron').ipcRenderer
+
     document.getElementById('closeMenu').addEventListener('click', () => ipc.send('close menu'))
+    document.getElementById('showSkills').addEventListener('click', () => ipc.send('show skills'))
     document.getElementById('addSkill').addEventListener('click', () => ipc.send('show skill form'))
   </script>
 </body>

@@ -91,6 +91,12 @@ ipcMain.on('show menu', () => {
 
 ipcMain.on('close menu', () => menu.close())
 
+// show skills
+ipcMain.on('show skills', () => {
+  win.loadFile('./public/index.html')
+  menu.close()
+})
+
 // show skill form
 ipcMain.on('show skill form', () => {
   menu.close()
